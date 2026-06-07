@@ -33,18 +33,18 @@ export function Fireworks() {
     window.addEventListener("resize", resize);
 
     function burst(x: number, y: number, color: string) {
-      const count = 60 + Math.floor(Math.random() * 40);
+      const count = 70 + Math.floor(Math.random() * 50);
       for (let i = 0; i < count; i++) {
         const angle = (Math.PI * 2 * i) / count + Math.random() * 0.3;
-        const speed = (2 + Math.random() * 5) * dpr;
+        const speed = (4 + Math.random() * 8) * dpr;
         particles.push({
           x, y,
           vx: Math.cos(angle) * speed,
           vy: Math.sin(angle) * speed,
           life: 0,
-          max: 60 + Math.random() * 40,
+          max: 32 + Math.random() * 22,
           color,
-          size: (1.5 + Math.random() * 2.5) * dpr,
+          size: (1.8 + Math.random() * 3) * dpr,
         });
       }
     }
@@ -56,13 +56,13 @@ export function Fireworks() {
       burst(x, y, color);
     }
 
-    const interval = setInterval(launch, 380);
+    const interval = setInterval(launch, 180);
     // initial salvo
-    for (let i = 0; i < 3; i++) setTimeout(launch, i * 120);
+    for (let i = 0; i < 5; i++) setTimeout(launch, i * 60);
 
     function tick() {
       if (!ctx || !canvas) return;
-      ctx.fillStyle = "rgba(0,0,0,0.18)";
+      ctx.fillStyle = "rgba(0,0,0,0.28)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.globalCompositeOperation = "lighter";
       particles = particles.filter((p) => p.life < p.max);
@@ -70,8 +70,8 @@ export function Fireworks() {
         p.life++;
         p.x += p.vx;
         p.y += p.vy;
-        p.vy += 0.05 * dpr;
-        p.vx *= 0.99;
+        p.vy += 0.14 * dpr;
+        p.vx *= 0.985;
         const t = 1 - p.life / p.max;
         ctx.beginPath();
         ctx.shadowBlur = 18;
