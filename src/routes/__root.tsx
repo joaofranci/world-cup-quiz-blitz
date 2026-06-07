@@ -11,7 +11,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import stadiumBg from "../assets/stadium-bg.png.asset.json";
+import stadiumBg from "../assets/stadium-bg.png";
 
 function NotFoundComponent() {
   return (
@@ -122,7 +122,7 @@ function RootComponent() {
       <div
         aria-hidden
         className="fixed inset-0 -z-10 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${stadiumBg.url})` }}
+        style={{ backgroundImage: `url(${stadiumBg})` }}
       />
       <div aria-hidden className="fixed inset-0 -z-10 bg-background/70 backdrop-blur-[2px]" />
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
