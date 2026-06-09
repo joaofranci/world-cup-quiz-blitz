@@ -8,7 +8,7 @@ import { TrophySlots } from "@/components/game/TrophySlots";
 import { fetchQuestions, pickRandom } from "@/lib/data/questions";
 import { CATEGORIES, type Category, type Question } from "@/lib/game/types";
 import { addTrophy, getProfile } from "@/lib/profile";
-import { findCountry } from "@/lib/countries";
+import { findCountry, flagUrl, flagSrcSet } from "@/lib/countries";
 import { submitScore } from "@/lib/ranking";
 import { sfx, isMuted, setMuted, startMusic, stopMusic } from "@/lib/game/sfx";
 
@@ -112,7 +112,7 @@ function GamePage() {
         endMatch(true, newScore);
         stopMusic();
         sfx.whistle();
-        setTimeout(() => sfx.trophy(), 400);
+        setTimeout(() => sfx.win(), 250);
         setPhase("won");
       } else {
         setPhase("result");
@@ -147,9 +147,13 @@ function GamePage() {
             ← Home
           </Link>
           {playerCountry && (
-            <span className="text-3xl" title={playerCountry.name} aria-label={playerCountry.name}>
-              {playerCountry.flag}
-            </span>
+            <img
+              src={flagUrl(playerCountry, "w80")}
+              srcSet={flagSrcSet(playerCountry)}
+              title={playerCountry.name}
+              alt={playerCountry.name}
+              className="h-7 w-auto rounded-sm shadow-sm ring-1 ring-black/20"
+            />
           )}
           <div className="flex items-center gap-4">
             <div className="text-center">

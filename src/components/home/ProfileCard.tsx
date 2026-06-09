@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getProfile, setNickname, setCountry, type Profile } from "@/lib/profile";
-import { COUNTRIES, findCountry } from "@/lib/countries";
+import { COUNTRIES, findCountry, flagUrl, flagSrcSet } from "@/lib/countries";
 
 export function ProfileCard() {
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -22,11 +22,16 @@ export function ProfileCard() {
       <div className="flex items-center gap-4">
         <button
           onClick={() => setPickingFlag((v) => !v)}
-          className="w-16 h-16 rounded-2xl pitch-bg flex items-center justify-center text-4xl shadow-trophy hover:scale-105 transition"
+          className="w-16 h-16 rounded-2xl pitch-bg flex items-center justify-center overflow-hidden shadow-trophy hover:scale-105 transition"
           title="Change country"
           aria-label="Change country"
         >
-          {country.flag}
+          <img
+            src={flagUrl(country, "w160")}
+            srcSet={flagSrcSet(country)}
+            alt={country.name}
+            className="w-14 h-10 object-cover rounded-md ring-1 ring-black/30"
+          />
         </button>
         <div className="flex-1 min-w-0">
           {editing ? (
@@ -77,11 +82,16 @@ export function ProfileCard() {
                 setProfile(setCountry(c.code));
                 setPickingFlag(false);
               }}
-              className={`text-2xl aspect-square rounded-lg flex items-center justify-center hover:scale-110 transition ${
+              className={`aspect-square rounded-lg flex items-center justify-center overflow-hidden hover:scale-110 transition p-1 ${
                 c.code === country.code ? "bg-gold/40 ring-2 ring-gold" : "bg-background/50"
               }`}
             >
-              {c.flag}
+              <img
+                src={flagUrl(c, "w80")}
+                srcSet={flagSrcSet(c)}
+                alt={c.name}
+                className="w-full h-full object-cover rounded ring-1 ring-black/20"
+              />
             </button>
           ))}
         </div>
