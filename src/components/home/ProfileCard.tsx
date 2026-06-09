@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { getProfile, setNickname, type Profile } from "@/lib/profile";
+import { getProfile, setNickname, setCountry, type Profile } from "@/lib/profile";
+import { COUNTRIES, findCountry } from "@/lib/countries";
 
 export function ProfileCard() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState("");
+  const [pickingFlag, setPickingFlag] = useState(false);
 
   useEffect(() => {
     const p = getProfile();
@@ -13,14 +15,19 @@ export function ProfileCard() {
   }, []);
 
   if (!profile) return null;
-  const initials = profile.nickname.slice(0, 2).toUpperCase();
+  const country = findCountry(profile.country) ?? COUNTRIES[0];
 
   return (
     <div className="rounded-3xl p-6 bg-card border border-border shadow-stadium">
       <div className="flex items-center gap-4">
-        <div className="w-16 h-16 rounded-2xl pitch-bg flex items-center justify-center font-display text-2xl text-white shadow-trophy">
-          {initials}
-        </div>
+        <button
+          onClick={() => setPickingFlag((v) => !v)}
+          className="w-16 h-16 rounded-2xl pitch-bg flex items-center justify-center text-4xl shadow-trophy hover:scale-105 transition"
+          title="Change country"
+          aria-label="Change country"
+        >
+          {country.flag}
+        </button>
         <div className="flex-1 min-w-0">
           {editing ? (
             <div className="flex gap-2">
@@ -43,7 +50,9 @@ export function ProfileCard() {
             </div>
           ) : (
             <>
-              <div className="text-xs uppercase tracking-widest text-muted-foreground">Player</div>
+              <div className="text-xs uppercase tracking-widest text-muted-foreground">
+                {country.name}
+              </div>
               <div className="font-display text-3xl tracking-wider truncate">{profile.nickname}</div>
             </>
           )}
@@ -57,6 +66,26 @@ export function ProfileCard() {
           </button>
         )}
       </div>
+
+      {pickingFlag && (
+        <div className="mt-4 grid grid-cols-6 sm:grid-cols-8 gap-2 p-3 rounded-2xl bg-secondary">
+          {COUNTRIES.map((c) => (
+            <button
+              key={c.code}
+              title={c.name}
+              onClick={() => {
+                setProfile(setCountry(c.code));
+                setPickingFlag(false);
+              }}
+              className={`text-2xl aspect-square rounded-lg flex items-center justify-center hover:scale-110 transition ${
+                c.code === country.code ? "bg-gold/40 ring-2 ring-gold" : "bg-background/50"
+              }`}
+            >
+              {c.flag}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
