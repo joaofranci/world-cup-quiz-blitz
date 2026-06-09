@@ -33,11 +33,16 @@ function HomePage() {
           <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
             Spin the roulette, conquer all six categories, and lift the trophy.
           </p>
-          <div className="mt-5 flex flex-wrap justify-center gap-1.5 text-2xl select-none" aria-hidden>
+          <div className="mt-5 flex flex-wrap justify-center gap-2 select-none" aria-hidden>
             {COUNTRIES.slice(0, 16).map((c) => (
-              <span key={c.code} title={c.name} className="drop-shadow-sm">
-                {c.flag}
-              </span>
+              <img
+                key={c.code}
+                src={flagUrl(c, "w80")}
+                srcSet={flagSrcSet(c)}
+                title={c.name}
+                alt=""
+                className="h-6 w-auto rounded-sm shadow-sm ring-1 ring-black/20"
+              />
             ))}
           </div>
         </header>
