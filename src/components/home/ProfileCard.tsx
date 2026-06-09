@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getProfile, setNickname, setCountry, type Profile } from "@/lib/profile";
-import { COUNTRIES, findCountry } from "@/lib/countries";
+import { COUNTRIES, findCountry, flagUrl, flagSrcSet } from "@/lib/countries";
 
 export function ProfileCard() {
   const [profile, setProfile] = useState<Profile | null>(null);
