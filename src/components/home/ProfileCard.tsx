@@ -82,11 +82,16 @@ export function ProfileCard() {
                 setProfile(setCountry(c.code));
                 setPickingFlag(false);
               }}
-              className={`text-2xl aspect-square rounded-lg flex items-center justify-center hover:scale-110 transition ${
+              className={`aspect-square rounded-lg flex items-center justify-center overflow-hidden hover:scale-110 transition p-1 ${
                 c.code === country.code ? "bg-gold/40 ring-2 ring-gold" : "bg-background/50"
               }`}
             >
-              {c.flag}
+              <img
+                src={flagUrl(c, "w80")}
+                srcSet={flagSrcSet(c)}
+                alt={c.name}
+                className="w-full h-full object-cover rounded ring-1 ring-black/20"
+              />
             </button>
           ))}
         </div>
