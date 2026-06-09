@@ -124,7 +124,7 @@ function RootComponent() {
         className="fixed inset-0 -z-10 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${stadiumBg})` }}
       />
-      <div aria-hidden className="fixed inset-0 -z-10 bg-background/70 backdrop-blur-[2px]" />
+      <div aria-hidden className="fixed inset-0 -z-10 bg-background/30" />
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
     </QueryClientProvider>
