@@ -112,7 +112,7 @@ function GamePage() {
         endMatch(true, newScore);
         stopMusic();
         sfx.whistle();
-        setTimeout(() => sfx.trophy(), 400);
+        setTimeout(() => sfx.win(), 250);
         setPhase("won");
       } else {
         setPhase("result");
