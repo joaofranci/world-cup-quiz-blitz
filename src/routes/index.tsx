@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ProfileCard } from "@/components/home/ProfileCard";
 import { RankingBoard } from "@/components/home/RankingBoard";
+import { COUNTRIES } from "@/lib/countries";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -32,6 +33,13 @@ function HomePage() {
           <p className="text-muted-foreground mt-3 max-w-xl mx-auto">
             Spin the roulette, conquer all six categories, and lift the trophy.
           </p>
+          <div className="mt-5 flex flex-wrap justify-center gap-1.5 text-2xl select-none" aria-hidden>
+            {COUNTRIES.slice(0, 16).map((c) => (
+              <span key={c.code} title={c.name} className="drop-shadow-sm">
+                {c.flag}
+              </span>
+            ))}
+          </div>
         </header>
 
         <div className="grid md:grid-cols-2 gap-6">

@@ -8,6 +8,7 @@ import { TrophySlots } from "@/components/game/TrophySlots";
 import { fetchQuestions, pickRandom } from "@/lib/data/questions";
 import { CATEGORIES, type Category, type Question } from "@/lib/game/types";
 import { addTrophy, getProfile } from "@/lib/profile";
+import { findCountry } from "@/lib/countries";
 import { submitScore } from "@/lib/ranking";
 import { sfx, isMuted, setMuted, startMusic, stopMusic } from "@/lib/game/sfx";
 
@@ -39,6 +40,7 @@ function GamePage() {
   const [varRemoved, setVarRemoved] = useState<number[]>([]);
   const [extraTimeTrigger, setExtraTimeTrigger] = useState(0);
   const [muted, setMutedState] = useState(false);
+  const playerCountry = findCountry(typeof window !== "undefined" ? getProfile().country : undefined);
 
   useEffect(() => {
     setMutedState(isMuted());
@@ -144,6 +146,11 @@ function GamePage() {
           <Link to="/" className="text-sm text-muted-foreground hover:text-foreground">
             ← Home
           </Link>
+          {playerCountry && (
+            <span className="text-3xl" title={playerCountry.name} aria-label={playerCountry.name}>
+              {playerCountry.flag}
+            </span>
+          )}
           <div className="flex items-center gap-4">
             <div className="text-center">
               <div className="text-xs uppercase tracking-widest text-muted-foreground">Score</div>
