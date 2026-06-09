@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ProfileCard } from "@/components/home/ProfileCard";
 import { RankingBoard } from "@/components/home/RankingBoard";
-import { COUNTRIES } from "@/lib/countries";
+import { COUNTRIES, flagUrl, flagSrcSet } from "@/lib/countries";
 
 export const Route = createFileRoute("/")({
   head: () => ({
