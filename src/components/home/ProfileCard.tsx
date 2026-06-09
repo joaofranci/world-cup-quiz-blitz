@@ -22,11 +22,16 @@ export function ProfileCard() {
       <div className="flex items-center gap-4">
         <button
           onClick={() => setPickingFlag((v) => !v)}
-          className="w-16 h-16 rounded-2xl pitch-bg flex items-center justify-center text-4xl shadow-trophy hover:scale-105 transition"
+          className="w-16 h-16 rounded-2xl pitch-bg flex items-center justify-center overflow-hidden shadow-trophy hover:scale-105 transition"
           title="Change country"
           aria-label="Change country"
         >
-          {country.flag}
+          <img
+            src={flagUrl(country, "w160")}
+            srcSet={flagSrcSet(country)}
+            alt={country.name}
+            className="w-14 h-10 object-cover rounded-md ring-1 ring-black/30"
+          />
         </button>
         <div className="flex-1 min-w-0">
           {editing ? (
