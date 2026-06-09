@@ -138,6 +138,44 @@ export const sfx = {
     noise({ dur: 0.6, gain: 0.05, bandpass: 6000, delay: 0.5 });
   },
 
+  win: () => {
+    // Addictive "olé olé olé" stadium chant: cheer + bouncy melody + trumpets
+    // Crowd cheer (filtered noise swell)
+    noise({ dur: 1.4, gain: 0.18, bandpass: 1800 });
+    noise({ dur: 1.6, gain: 0.12, bandpass: 600, delay: 0.05 });
+
+    // Sliding whistle "wheeeee!"
+    tone({ freq: 700, to: 1800, dur: 0.45, type: "sine", gain: 0.16 });
+    tone({ freq: 1800, to: 900, dur: 0.35, type: "sine", gain: 0.14, delay: 0.45 });
+
+    // Triumphant arpeggio C-E-G-C-E-G-C (major, addictive)
+    const arp = [523, 659, 784, 1047, 1319, 1568, 2093];
+    arp.forEach((f, i) =>
+      tone({ freq: f, dur: 0.14, type: "triangle", gain: 0.18, delay: 0.85 + i * 0.07 })
+    );
+
+    // Olé! Olé! Olé! Olé! — four bouncy stabs (G-G  C-C)
+    const ole = [
+      { f: 392, d: 1.4 },
+      { f: 392, d: 1.62 },
+      { f: 523, d: 1.84 },
+      { f: 523, d: 2.06 },
+    ];
+    ole.forEach(({ f, d }) => {
+      tone({ freq: f, dur: 0.18, type: "sawtooth", gain: 0.16, delay: d });
+      tone({ freq: f * 1.5, dur: 0.18, type: "square", gain: 0.1, delay: d });
+    });
+
+    // Big finishing chord
+    [523, 659, 784, 1047].forEach((f) =>
+      tone({ freq: f, dur: 0.9, type: "triangle", gain: 0.16, delay: 2.3 })
+    );
+    // Confetti pop
+    noise({ dur: 0.3, gain: 0.18, bandpass: 4500, delay: 2.35 });
+  },
+
+
+
   defeat: () => {
     const notes = [523, 466, 392, 311];
     notes.forEach((f, i) =>
