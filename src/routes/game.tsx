@@ -147,9 +147,13 @@ function GamePage() {
             ← Home
           </Link>
           {playerCountry && (
-            <span className="text-3xl" title={playerCountry.name} aria-label={playerCountry.name}>
-              {playerCountry.flag}
-            </span>
+            <img
+              src={flagUrl(playerCountry, "w80")}
+              srcSet={flagSrcSet(playerCountry)}
+              title={playerCountry.name}
+              alt={playerCountry.name}
+              className="h-7 w-auto rounded-sm shadow-sm ring-1 ring-black/20"
+            />
           )}
           <div className="flex items-center gap-4">
             <div className="text-center">
