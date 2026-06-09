@@ -8,7 +8,7 @@ import { TrophySlots } from "@/components/game/TrophySlots";
 import { fetchQuestions, pickRandom } from "@/lib/data/questions";
 import { CATEGORIES, type Category, type Question } from "@/lib/game/types";
 import { addTrophy, getProfile } from "@/lib/profile";
-import { findCountry } from "@/lib/countries";
+import { findCountry, flagUrl, flagSrcSet } from "@/lib/countries";
 import { submitScore } from "@/lib/ranking";
 import { sfx, isMuted, setMuted, startMusic, stopMusic } from "@/lib/game/sfx";
 
