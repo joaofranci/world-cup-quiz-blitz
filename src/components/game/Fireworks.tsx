@@ -11,7 +11,7 @@ const NEON = [
 
 const MAX_PARTICLES = 320;
 
-export function Fireworks({ duration = 2600 }: { duration?: number }) {
+export function Fireworks({ duration = 4200 }: { duration?: number }) {
   const ref = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -59,9 +59,9 @@ export function Fireworks({ duration = 2600 }: { duration?: number }) {
       burst(x, y, NEON[Math.floor(Math.random() * NEON.length)]);
     }
 
-    // initial salvo
-    for (let i = 0; i < 4; i++) setTimeout(launch, i * 80);
-    const interval = window.setInterval(launch, 220);
+    // initial salvo — bigger burst to match the chant
+    for (let i = 0; i < 7; i++) setTimeout(launch, i * 60);
+    const interval = window.setInterval(launch, 160);
     const stopTimer = window.setTimeout(() => {
       stopped = true;
       clearInterval(interval);
