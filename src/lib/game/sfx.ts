@@ -139,39 +139,57 @@ export const sfx = {
   },
 
   win: () => {
-    // Addictive "olé olé olé" stadium chant: cheer + bouncy melody + trumpets
-    // Crowd cheer (filtered noise swell)
-    noise({ dur: 1.4, gain: 0.18, bandpass: 1800 });
-    noise({ dur: 1.6, gain: 0.12, bandpass: 600, delay: 0.05 });
+    // Stadium victory: roaring crowd + ref whistle + trumpet fanfare +
+    // "Olé Olé Olé Olé" crowd chant + samba kick + finishing chord.
 
-    // Sliding whistle "wheeeee!"
-    tone({ freq: 700, to: 1800, dur: 0.45, type: "sine", gain: 0.16 });
-    tone({ freq: 1800, to: 900, dur: 0.35, type: "sine", gain: 0.14, delay: 0.45 });
+    // 1) Roaring crowd (layered noise swell)
+    noise({ dur: 2.2, gain: 0.22, bandpass: 1800 });
+    noise({ dur: 2.4, gain: 0.16, bandpass: 600, delay: 0.04 });
+    noise({ dur: 1.8, gain: 0.1,  bandpass: 3500, delay: 0.1 });
 
-    // Triumphant arpeggio C-E-G-C-E-G-C (major, addictive)
-    const arp = [523, 659, 784, 1047, 1319, 1568, 2093];
-    arp.forEach((f, i) =>
-      tone({ freq: f, dur: 0.14, type: "triangle", gain: 0.18, delay: 0.85 + i * 0.07 })
-    );
+    // 2) Referee whistle (tremolo) at kickoff of the cheer
+    sfx.whistle();
 
-    // Olé! Olé! Olé! Olé! — four bouncy stabs (G-G  C-C)
-    const ole = [
-      { f: 392, d: 1.4 },
-      { f: 392, d: 1.62 },
-      { f: 523, d: 1.84 },
-      { f: 523, d: 2.06 },
-    ];
-    ole.forEach(({ f, d }) => {
-      tone({ freq: f, dur: 0.18, type: "sawtooth", gain: 0.16, delay: d });
-      tone({ freq: f * 1.5, dur: 0.18, type: "square", gain: 0.1, delay: d });
+    // 3) Trumpet fanfare — bright triadic call
+    const fanfare = [523, 659, 784, 659, 784, 1047];
+    fanfare.forEach((f, i) => {
+      tone({ freq: f,     dur: 0.16, type: "sawtooth", gain: 0.16, delay: 0.35 + i * 0.11 });
+      tone({ freq: f * 2, dur: 0.16, type: "square",   gain: 0.08, delay: 0.35 + i * 0.11 });
     });
 
-    // Big finishing chord
-    [523, 659, 784, 1047].forEach((f) =>
-      tone({ freq: f, dur: 0.9, type: "triangle", gain: 0.16, delay: 2.3 })
+    // 4) Triumphant arpeggio C–E–G–C (octave run)
+    const arp = [523, 659, 784, 1047, 1319, 1568, 2093];
+    arp.forEach((f, i) =>
+      tone({ freq: f, dur: 0.13, type: "triangle", gain: 0.18, delay: 1.1 + i * 0.06 })
     );
-    // Confetti pop
-    noise({ dur: 0.3, gain: 0.18, bandpass: 4500, delay: 2.35 });
+
+    // 5) "Olé Olé Olé Olééé" — 4 bouncy stabs with a held last note
+    const ole = [
+      { f: 392, d: 1.65, dur: 0.18 }, // O-
+      { f: 392, d: 1.88, dur: 0.18 }, // lé
+      { f: 523, d: 2.11, dur: 0.18 }, // O-
+      { f: 523, d: 2.34, dur: 0.55 }, // lééé (held)
+    ];
+    ole.forEach(({ f, d, dur }) => {
+      tone({ freq: f,       dur, type: "sawtooth", gain: 0.18, delay: d });
+      tone({ freq: f * 1.5, dur, type: "square",   gain: 0.1,  delay: d });
+      tone({ freq: f * 0.5, dur, type: "triangle", gain: 0.14, delay: d });
+    });
+
+    // 6) Samba-ish kick groove under the chant
+    const kicks = [1.65, 1.88, 2.11, 2.34, 2.58, 2.8];
+    kicks.forEach((d) =>
+      tone({ freq: 150, to: 50, dur: 0.18, type: "sine", gain: 0.32, delay: d })
+    );
+
+    // 7) Big finishing major chord + confetti pop
+    [523, 659, 784, 1047, 1319].forEach((f) =>
+      tone({ freq: f, dur: 1.1, type: "triangle", gain: 0.16, delay: 3.0 })
+    );
+    noise({ dur: 0.35, gain: 0.22, bandpass: 4500, delay: 3.05 });
+    noise({ dur: 0.45, gain: 0.14, bandpass: 1200, delay: 3.1 });
+    // Final whistle blast
+    tone({ freq: 2200, to: 2600, dur: 0.5, type: "sine", gain: 0.18, delay: 3.4 });
   },
 
 
