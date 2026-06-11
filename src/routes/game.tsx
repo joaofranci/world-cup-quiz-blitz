@@ -83,6 +83,7 @@ function GamePage() {
       await submitScore({
         playerId: profile.playerId,
         nickname: profile.nickname,
+        country: profile.country ?? null,
         score: finalScore,
         won: victory,
       });
