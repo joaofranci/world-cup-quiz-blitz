@@ -6,16 +6,17 @@ export interface RankingRow {
   best_score: number;
   total_matches: number;
   trophies_earned: number;
+  country: string | null;
 }
 
 export async function fetchTopRankings(limit = 10): Promise<RankingRow[]> {
   const { data, error } = await supabase
     .from("rankings")
-    .select("player_id, nickname, best_score, total_matches, trophies_earned")
+    .select("player_id, nickname, best_score, total_matches, trophies_earned, country")
     .order("best_score", { ascending: false })
     .limit(limit);
   if (error) throw error;
-  return data ?? [];
+  return (data ?? []) as RankingRow[];
 }
 
 export async function submitScore(params: {
@@ -23,9 +24,9 @@ export async function submitScore(params: {
   nickname: string;
   score: number;
   won: boolean;
+  country?: string | null;
 }) {
-  const { playerId, nickname, score, won } = params;
-  // Fetch existing row
+  const { playerId, nickname, score, won, country } = params;
   const { data: existing } = await supabase
     .from("rankings")
     .select("best_score, total_matches, trophies_earned")
@@ -36,6 +37,7 @@ export async function submitScore(params: {
     await supabase.from("rankings").insert({
       player_id: playerId,
       nickname,
+      country: country ?? null,
       best_score: score,
       total_matches: 1,
       trophies_earned: won ? 1 : 0,
@@ -45,6 +47,7 @@ export async function submitScore(params: {
       .from("rankings")
       .update({
         nickname,
+        country: country ?? null,
         best_score: Math.max(existing.best_score, score),
         total_matches: existing.total_matches + 1,
         trophies_earned: existing.trophies_earned + (won ? 1 : 0),
