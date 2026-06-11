@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { fetchTopRankings, type RankingRow } from "@/lib/ranking";
 import { getProfile } from "@/lib/profile";
+import { findCountry, flagUrl, flagSrcSet } from "@/lib/countries";
 
 type Status = "loading" | "ready" | "error";
 
