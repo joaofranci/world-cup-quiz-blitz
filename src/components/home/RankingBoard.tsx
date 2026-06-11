@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { fetchTopRankings, type RankingRow } from "@/lib/ranking";
 import { getProfile } from "@/lib/profile";
+import { findCountry, flagUrl, flagSrcSet } from "@/lib/countries";
 
 type Status = "loading" | "ready" | "error";
 
@@ -118,6 +119,19 @@ export function RankingBoard({ refreshKey }: { refreshKey?: number }) {
                     </span>
                     <div className="min-w-0">
                       <div className="flex items-center gap-2">
+                        {(() => {
+                          const c = findCountry(r.country);
+                          return c ? (
+                            <img
+                              src={flagUrl(c, "w40")}
+                              srcSet={flagSrcSet(c)}
+                              alt={c.name}
+                              title={c.name}
+                              className="h-4 w-auto rounded-[2px] shadow-sm ring-1 ring-black/20 shrink-0"
+                              loading="lazy"
+                            />
+                          ) : null;
+                        })()}
                         <span className="font-semibold truncate">
                           {r.nickname}
                         </span>
