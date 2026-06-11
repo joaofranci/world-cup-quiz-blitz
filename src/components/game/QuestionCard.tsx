@@ -38,7 +38,10 @@ export function QuestionCard({
   useEffect(() => {
     setSeconds(initialSeconds + extraTime);
     setVarStage("idle");
+    setSelected(null);
+    setRevealed(false);
     prevVarLen.current = 0;
+    lockRef.current = false;
   }, [question.id]); // reset on new q
 
   useEffect(() => {
