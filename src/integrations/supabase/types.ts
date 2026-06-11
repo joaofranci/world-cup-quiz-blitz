@@ -50,6 +50,7 @@ export type Database = {
       rankings: {
         Row: {
           best_score: number
+          country: string | null
           created_at: string
           nickname: string
           player_id: string
@@ -59,6 +60,7 @@ export type Database = {
         }
         Insert: {
           best_score?: number
+          country?: string | null
           created_at?: string
           nickname: string
           player_id: string
@@ -68,6 +70,7 @@ export type Database = {
         }
         Update: {
           best_score?: number
+          country?: string | null
           created_at?: string
           nickname?: string
           player_id?: string
