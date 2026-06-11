@@ -54,8 +54,7 @@ export function QuestionCard({
     if (varRemoved.length > prevVarLen.current && varStage === "idle") {
       setVarStage("scanning");
       sfx.var();
-      const t = setTimeout(() => setVarStage("done"), 1500);
-      return () => clearTimeout(t);
+      window.setTimeout(() => setVarStage("done"), 1500);
     }
     prevVarLen.current = varRemoved.length;
   }, [varRemoved, varStage]);
